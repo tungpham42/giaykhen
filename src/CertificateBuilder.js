@@ -33,7 +33,7 @@ const CertificateBuilder = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(null);
   const certificateRef = useRef(null);
-  // eslint-disable-next-line
+
   const validateForm = () => {
     const newErrors = {};
     if (!certificateData.recipientName) newErrors.recipientName = "Required";
@@ -61,37 +61,48 @@ const CertificateBuilder = () => {
       const element = certificateRef.current;
       if (!element) throw new Error("Certificate element not found");
 
+      // Ensure the element is fully rendered before capturing
       await new Promise((resolve) => setTimeout(resolve, 500));
 
+      // Dynamically calculate scale and dimensions for mobile
+      const isMobile = window.innerWidth <= 768;
+      const scaleFactor = isMobile
+        ? Math.min(window.devicePixelRatio, 1.5)
+        : Math.min(window.devicePixelRatio, 2);
+      const width = element.scrollWidth;
+      const height = element.scrollHeight;
+
       const canvas = await html2canvas(element, {
-        scale: Math.min(window.devicePixelRatio, 2),
-        useCORS: true,
-        allowTaint: true,
+        scale: scaleFactor,
+        useCORS: true, // Enforce CORS for external resources
+        allowTaint: false, // Disable tainting for security
         logging: false,
-        width: element.scrollWidth,
-        height: element.scrollHeight,
+        width: width,
+        height: height,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-        foreignObjectRendering: false,
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+        backgroundColor: styles.backgroundColor, // Ensure background is captured
       });
 
       // Convert canvas to PNG and trigger download
       const imgData = canvas.toDataURL("image/png", 1.0);
       const link = document.createElement("a");
       link.href = imgData;
-      link.download = "Certificate.png";
+      link.download = `Certificate_${Date.now()}.png`; // Unique filename
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error("Download error:", error);
-      setDownloadError(`Failed to generate PNG: ${error.message}`);
+      console.error("Download failed:", error);
+      setDownloadError(
+        `Failed to generate certificate: ${error.message}. Please try again.`
+      );
     } finally {
       setIsDownloading(false);
-    }
-  }, [validateForm]);
+    } // eslint-disable-next-line
+  }, [styles, certificateData]);
 
   const certificateStyles = {
     backgroundColor: styles.backgroundColor,
@@ -102,11 +113,12 @@ const CertificateBuilder = () => {
   const isMobile = window.innerWidth <= 768;
   const previewStyles = {
     ...certificateStyles,
-    width: isMobile ? "297mm" : "297mm",
-    height: isMobile ? "210mm" : "210mm",
-    transform: isMobile ? "scale(1)" : "scale(1)",
+    width: isMobile ? "100%" : "297mm", // Full width on mobile
+    height: isMobile ? "auto" : "210mm", // Auto height on mobile
+    transform: isMobile ? "none" : "scale(1)", // No scaling on mobile
     transformOrigin: "top left",
     overflow: "hidden",
+    padding: isMobile ? "10px" : "0", // Add padding for mobile
   };
 
   // Modified templates without logo
