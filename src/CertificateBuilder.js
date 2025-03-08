@@ -64,8 +64,8 @@ const CertificateBuilder = () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio || 2,
-        useCORS: false,
+        scale: Math.min(window.devicePixelRatio, 2),
+        useCORS: true,
         allowTaint: true,
         logging: false,
         width: element.scrollWidth,
