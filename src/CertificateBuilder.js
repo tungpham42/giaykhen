@@ -67,7 +67,7 @@ const CertificateBuilder = () => {
       const canvas = await html2canvas(element, {
         scale: window.devicePixelRatio || 2,
         useCORS: true,
-        allowTaint: true, // Allow tainted canvas (less secure, use cautiously)
+        allowTaint: true,
         logging: false,
         width: element.scrollWidth,
         height: element.scrollHeight,
@@ -75,7 +75,7 @@ const CertificateBuilder = () => {
         scrollY: 0,
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
-        foreignObjectRendering: true, // Handle custom fonts/SVGs
+        foreignObjectRendering: false,
       });
 
       const imgData = canvas.toDataURL("image/png", 1.0);
@@ -112,12 +112,6 @@ const CertificateBuilder = () => {
     backgroundColor: styles.backgroundColor,
     color: styles.textColor,
     fontFamily: styles.fontFamily,
-  };
-
-  const previewStyles = {
-    ...certificateStyles,
-    transformOrigin: "top left",
-    overflow: "hidden",
   };
 
   // Modified templates without logo
@@ -788,7 +782,14 @@ const CertificateBuilder = () => {
         <Col md={12}>
           <Card
             className="certificate-preview shadow-lg"
-            style={previewStyles}
+            style={{
+              ...certificateStyles,
+              width: "297mm",
+              height: "210mm",
+              transform: "scale(1)",
+              transformOrigin: "top left",
+              overflow: "hidden",
+            }}
             ref={certificateRef}
           >
             <Card.Body className="certificate-body">
