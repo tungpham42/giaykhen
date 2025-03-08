@@ -11,7 +11,6 @@ import {
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { SketchPicker } from "react-color";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./CertificateBuilder.css";
 
 const CertificateBuilder = () => {
@@ -117,7 +116,7 @@ const CertificateBuilder = () => {
       pdf.save("Certificate.pdf");
     } catch (error) {
       console.error("Download error:", error);
-      setDownloadError("Failed to generate PDF. Please try again.");
+      setDownloadError(`Failed to generate PDF: ${error}`);
     } finally {
       setIsDownloading(false);
     }
