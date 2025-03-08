@@ -487,8 +487,8 @@ const CertificateBuilder = () => {
               ...certificateStyles,
               width: "297mm",
               height: "210mm",
-              transform: "scale(0.65)",
-              transformOrigin: "top center",
+              transform: "scale(0.42)",
+              transformOrigin: "top left",
             }}
             ref={certificateRef}
           >
