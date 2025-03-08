@@ -36,7 +36,7 @@ const CertificateBuilder = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(null);
   const certificateRef = useRef(null);
-
+  // eslint-disable-next-line
   const validateForm = () => {
     const newErrors = {};
     if (!certificateData.recipientName) newErrors.recipientName = "Required";
