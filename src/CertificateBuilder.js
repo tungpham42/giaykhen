@@ -20,7 +20,6 @@ const CertificateBuilder = () => {
     date: "",
     issuer: "",
     certificateNumber: "",
-    logo: null,
   });
 
   const [styles, setStyles] = useState({
@@ -51,21 +50,6 @@ const CertificateBuilder = () => {
     const { name, value } = e.target;
     setCertificateData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: null }));
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCertificateData((prev) => ({ ...prev, logo: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveLogo = () => {
-    setCertificateData((prev) => ({ ...prev, logo: null }));
   };
 
   const handleDownload = useCallback(async () => {
@@ -128,16 +112,9 @@ const CertificateBuilder = () => {
     fontFamily: styles.fontFamily,
   };
 
-  // Existing Templates (unchanged for brevity, only showing new ones below)
+  // Modified templates without logo
   const renderTemplate1 = () => (
     <div className="certificate-content template1">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template1-decoration"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <p className="template1-subtitle">This certifies that</p>
@@ -154,13 +131,6 @@ const CertificateBuilder = () => {
 
   const renderTemplate2 = () => (
     <div className="certificate-content template2">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template2-overlay"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <h2>{certificateData.recipientName || "Recipient Name"}</h2>
@@ -177,13 +147,6 @@ const CertificateBuilder = () => {
   const renderTemplate3 = () => (
     <div className="certificate-content template3">
       <div className="template3-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template3-body">
@@ -199,13 +162,6 @@ const CertificateBuilder = () => {
 
   const renderTemplate4 = () => (
     <div className="certificate-content template4">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template4-border">
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
         <p>Proudly presented to</p>
@@ -224,13 +180,6 @@ const CertificateBuilder = () => {
   const renderTemplate5 = () => (
     <div className="certificate-content template5">
       <div className="template5-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template5-body">
@@ -258,13 +207,6 @@ const CertificateBuilder = () => {
   const renderTemplate6 = () => (
     <div className="certificate-content template6">
       <div className="template6-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template6-body">
@@ -283,13 +225,6 @@ const CertificateBuilder = () => {
 
   const renderTemplate7 = () => (
     <div className="certificate-content template7">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template7-content">
         <h2>{certificateData.recipientName || "Recipient Name"}</h2>
@@ -307,13 +242,6 @@ const CertificateBuilder = () => {
   const renderTemplate8 = () => (
     <div className="certificate-content template8">
       <div className="template8-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template8-body">
@@ -332,13 +260,6 @@ const CertificateBuilder = () => {
 
   const renderTemplate9 = () => (
     <div className="certificate-content template9">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template9-background"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template9-content">
@@ -356,13 +277,6 @@ const CertificateBuilder = () => {
 
   const renderTemplate10 = () => (
     <div className="certificate-content template10">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template10-overlay"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template10-content">
@@ -387,16 +301,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 11 - Nature Inspired
   const renderTemplate11 = () => (
     <div className="certificate-content template11">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template11-overlay"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template11-content">
@@ -412,16 +318,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 12 - Artistic Splash
   const renderTemplate12 = () => (
     <div className="certificate-content template12">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template12-splash"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template12-content">
@@ -437,16 +335,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 13 - Golden Prestige
   const renderTemplate13 = () => (
     <div className="certificate-content template13">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template13-border"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template13-content">
@@ -461,16 +351,9 @@ const CertificateBuilder = () => {
       </div>
     </div>
   );
-  // New Template 14 - Regal Sophistication
+
   const renderTemplate14 = () => (
     <div className="certificate-content template14">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template14-frame"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template14-content">
@@ -487,17 +370,9 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 15 - Corporate Excellence
   const renderTemplate15 = () => (
     <div className="certificate-content template15">
       <div className="template15-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template15-body">
@@ -514,16 +389,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 16 - Modern Prestige
   const renderTemplate16 = () => (
     <div className="certificate-content template16">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template16-accent"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template16-content">
@@ -540,16 +407,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 17 - Timeless Elegance
   const renderTemplate17 = () => (
     <div className="certificate-content template17">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template17-border"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template17-content">
@@ -566,17 +425,9 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 18 - Tech Innovation
   const renderTemplate18 = () => (
     <div className="certificate-content template18">
       <div className="template18-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template18-body">
@@ -593,16 +444,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 19 - Academic Honor
   const renderTemplate19 = () => (
     <div className="certificate-content template19">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template19-overlay"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template19-content">
@@ -618,16 +461,9 @@ const CertificateBuilder = () => {
       </div>
     </div>
   );
-  // New Template 20 - Celestial Achievement
+
   const renderTemplate20 = () => (
     <div className="certificate-content template20">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template20-stars"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template20-content">
@@ -644,17 +480,9 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 21 - Eco-Friendly Recognition
   const renderTemplate21 = () => (
     <div className="certificate-content template21">
       <div className="template21-header">
-        {certificateData.logo && (
-          <img
-            src={certificateData.logo}
-            alt="Logo"
-            className="certificate-logo"
-          />
-        )}
         <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template21-body">
@@ -671,16 +499,8 @@ const CertificateBuilder = () => {
     </div>
   );
 
-  // New Template 22 - Vintage Diploma
   const renderTemplate22 = () => (
     <div className="certificate-content template22">
-      {certificateData.logo && (
-        <img
-          src={certificateData.logo}
-          alt="Logo"
-          className="certificate-logo"
-        />
-      )}
       <div className="template22-frame"></div>
       <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template22-content">
@@ -831,27 +651,6 @@ const CertificateBuilder = () => {
                     value={certificateData.certificateNumber}
                     onChange={handleChange}
                   />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="logo">
-                  <Form.Label>Upload Logo</Form.Label>
-                  <div className="logo-upload-group">
-                    <Form.Control
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                    {certificateData.logo && (
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        className="mt-2 w-25"
-                        onClick={handleRemoveLogo}
-                      >
-                        Remove Logo
-                      </Button>
-                    )}
-                  </div>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="template">
