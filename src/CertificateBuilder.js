@@ -1,5 +1,13 @@
-import React, { useState, useRef } from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import React, { useState, useRef, useCallback } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Alert,
+} from "react-bootstrap";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { SketchPicker } from "react-color";
@@ -25,6 +33,8 @@ const CertificateBuilder = () => {
 
   const [template, setTemplate] = useState("template1");
   const [errors, setErrors] = useState({});
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState(null);
   const certificateRef = useRef(null);
 
   const validateForm = () => {
@@ -59,23 +69,59 @@ const CertificateBuilder = () => {
     setCertificateData((prev) => ({ ...prev, logo: null }));
   };
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(async () => {
     if (!validateForm()) return;
 
-    html2canvas(certificateRef.current, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape", "mm", "a4");
-      const width = pdf.internal.pageSize.getWidth();
-      const height = (canvas.height * width) / canvas.width;
+    setIsDownloading(true);
+    setDownloadError(null);
 
-      pdf.addImage(imgData, "PNG", 0, 0, width, height);
+    try {
+      const element = certificateRef.current;
+      if (!element) throw new Error("Certificate element not found");
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const canvas = await html2canvas(element, {
+        scale: window.devicePixelRatio || 2,
+        useCORS: true,
+        logging: false,
+        width: element.scrollWidth,
+        height: element.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      });
+
+      const imgData = canvas.toDataURL("image/png", 1.0);
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
+        compress: true,
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgProps = { width: canvas.width, height: canvas.height };
+      const ratio = Math.min(
+        pdfWidth / imgProps.width,
+        pdfHeight / imgProps.height
+      );
+      const imgWidth = imgProps.width * ratio;
+      const imgHeight = imgProps.height * ratio;
+      const xOffset = (pdfWidth - imgWidth) / 2;
+      const yOffset = (pdfHeight - imgHeight) / 2;
+
+      pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
       pdf.save("Certificate.pdf");
-    });
-  };
+    } catch (error) {
+      console.error("Download error:", error);
+      setDownloadError("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsDownloading(false);
+    }
+  }, [validateForm]);
 
   const certificateStyles = {
     backgroundColor: styles.backgroundColor,
@@ -83,7 +129,7 @@ const CertificateBuilder = () => {
     fontFamily: styles.fontFamily,
   };
 
-  // [Keeping all template render functions unchanged...]
+  // Existing Templates (unchanged for brevity, only showing new ones below)
   const renderTemplate1 = () => (
     <div className="certificate-content template1">
       {certificateData.logo && (
@@ -93,14 +139,17 @@ const CertificateBuilder = () => {
           className="certificate-logo"
         />
       )}
-      <h1>Certificate of Completion</h1>
-      <p>This certifies that</p>
+      <div className="template1-decoration"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <p className="template1-subtitle">This certifies that</p>
       <h2>{certificateData.recipientName || "Recipient Name"}</h2>
       <p>has successfully completed</p>
       <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
-      <p>Issued on: {certificateData.date || "Date"}</p>
-      <p>By: {certificateData.issuer || "Issuer"}</p>
-      <p>Certificate #: {certificateData.certificateNumber || "Number"}</p>
+      <div className="template1-details">
+        <p>Issued on: {certificateData.date || "Date"}</p>
+        <p>By: {certificateData.issuer || "Issuer"}</p>
+        <p>Certificate #: {certificateData.certificateNumber || "Number"}</p>
+      </div>
     </div>
   );
 
@@ -113,7 +162,8 @@ const CertificateBuilder = () => {
           className="certificate-logo"
         />
       )}
-      <h1>Achievement Certificate</h1>
+      <div className="template2-overlay"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <h2>{certificateData.recipientName || "Recipient Name"}</h2>
       <p>For excellence in</p>
       <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
@@ -158,7 +208,7 @@ const CertificateBuilder = () => {
         />
       )}
       <div className="template4-border">
-        <h1>Certificate of Achievement</h1>
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
         <p>Proudly presented to</p>
         <h2>{certificateData.recipientName || "Recipient Name"}</h2>
         <p>For outstanding performance in</p>
@@ -182,7 +232,7 @@ const CertificateBuilder = () => {
             className="certificate-logo"
           />
         )}
-        <h1>Certification</h1>
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template5-body">
         <h2>{certificateData.recipientName || "Recipient Name"}</h2>
@@ -241,7 +291,7 @@ const CertificateBuilder = () => {
           className="certificate-logo"
         />
       )}
-      <h1>Achievement</h1>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       <div className="template7-content">
         <h2>{certificateData.recipientName || "Recipient Name"}</h2>
         <p>Recognized for outstanding activities in</p>
@@ -265,7 +315,7 @@ const CertificateBuilder = () => {
             className="certificate-logo"
           />
         )}
-        <h1>Recognition</h1>
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
       </div>
       <div className="template8-body">
         <p>Presented to</p>
@@ -277,6 +327,373 @@ const CertificateBuilder = () => {
         <p>Date: {certificateData.date || "Date"}</p>
         <p>Issuer: {certificateData.issuer || "Issuer"}</p>
         <p>Cert. No: {certificateData.certificateNumber || "Number"}</p>
+      </div>
+    </div>
+  );
+
+  const renderTemplate9 = () => (
+    <div className="certificate-content template9">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template9-background"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template9-content">
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Awarded for exceptional achievement in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template9-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTemplate10 = () => (
+    <div className="certificate-content template10">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template10-overlay"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template10-content">
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Recognized for mastery in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template10-details">
+          <div className="template10-detail-item">
+            <span>Date:</span>
+            <span>{certificateData.date || "Date"}</span>
+          </div>
+          <div className="template10-detail-item">
+            <span>Issuer:</span>
+            <span>{certificateData.issuer || "Issuer"}</span>
+          </div>
+          <div className="template10-detail-item">
+            <span>ID:</span>
+            <span>{certificateData.certificateNumber || "Number"}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 11 - Nature Inspired
+  const renderTemplate11 = () => (
+    <div className="certificate-content template11">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template11-overlay"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template11-content">
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For outstanding contribution to</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template11-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 12 - Artistic Splash
+  const renderTemplate12 = () => (
+    <div className="certificate-content template12">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template12-splash"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template12-content">
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Awarded for creativity in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template12-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 13 - Golden Prestige
+  const renderTemplate13 = () => (
+    <div className="certificate-content template13">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template13-border"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template13-content">
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Recognized for excellence in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template13-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+  // New Template 14 - Regal Sophistication
+  const renderTemplate14 = () => (
+    <div className="certificate-content template14">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template14-frame"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template14-content">
+        <p>Hereby awarded to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For exemplary achievement in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template14-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 15 - Corporate Excellence
+  const renderTemplate15 = () => (
+    <div className="certificate-content template15">
+      <div className="template15-header">
+        {certificateData.logo && (
+          <img
+            src={certificateData.logo}
+            alt="Logo"
+            className="certificate-logo"
+          />
+        )}
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      </div>
+      <div className="template15-body">
+        <p>Presented to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>In recognition of outstanding performance in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+      </div>
+      <div className="template15-footer">
+        <p>Issued on: {certificateData.date || "Date"}</p>
+        <p>By: {certificateData.issuer || "Issuer"}</p>
+        <p>Certificate No: {certificateData.certificateNumber || "Number"}</p>
+      </div>
+    </div>
+  );
+
+  // New Template 16 - Modern Prestige
+  const renderTemplate16 = () => (
+    <div className="certificate-content template16">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template16-accent"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template16-content">
+        <p>Awarded to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For excellence in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template16-details">
+          <p>{certificateData.date || "Date"}</p>
+          <p>{certificateData.issuer || "Issuer"}</p>
+          <p>{certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 17 - Timeless Elegance
+  const renderTemplate17 = () => (
+    <div className="certificate-content template17">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template17-border"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template17-content">
+        <p>This certificate is proudly presented to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For distinguished achievement in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template17-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>Certificate ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 18 - Tech Innovation
+  const renderTemplate18 = () => (
+    <div className="certificate-content template18">
+      <div className="template18-header">
+        {certificateData.logo && (
+          <img
+            src={certificateData.logo}
+            alt="Logo"
+            className="certificate-logo"
+          />
+        )}
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      </div>
+      <div className="template18-body">
+        <p>Awarded to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For innovative contributions to</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+      </div>
+      <div className="template18-footer">
+        <p>Date: {certificateData.date || "Date"}</p>
+        <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+        <p>ID: {certificateData.certificateNumber || "Number"}</p>
+      </div>
+    </div>
+  );
+
+  // New Template 19 - Academic Honor
+  const renderTemplate19 = () => (
+    <div className="certificate-content template19">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template19-overlay"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template19-content">
+        <p>Conferred upon</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>In recognition of academic excellence in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template19-details">
+          <p>{certificateData.date || "Date"}</p>
+          <p>{certificateData.issuer || "Issuer"}</p>
+          <p>{certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+  // New Template 20 - Celestial Achievement
+  const renderTemplate20 = () => (
+    <div className="certificate-content template20">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template20-stars"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template20-content">
+        <p>Awarded to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For stellar performance in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template20-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // New Template 21 - Eco-Friendly Recognition
+  const renderTemplate21 = () => (
+    <div className="certificate-content template21">
+      <div className="template21-header">
+        {certificateData.logo && (
+          <img
+            src={certificateData.logo}
+            alt="Logo"
+            className="certificate-logo"
+          />
+        )}
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      </div>
+      <div className="template21-body">
+        <p>Presented to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For sustainable efforts in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+      </div>
+      <div className="template21-footer">
+        <p>Issued on: {certificateData.date || "Date"}</p>
+        <p>By: {certificateData.issuer || "Issuer"}</p>
+        <p>No: {certificateData.certificateNumber || "Number"}</p>
+      </div>
+    </div>
+  );
+
+  // New Template 22 - Vintage Diploma
+  const renderTemplate22 = () => (
+    <div className="certificate-content template22">
+      {certificateData.logo && (
+        <img
+          src={certificateData.logo}
+          alt="Logo"
+          className="certificate-logo"
+        />
+      )}
+      <div className="template22-frame"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template22-content">
+        <p>This is to certify that</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Has completed with distinction</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template22-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>Certificate No: {certificateData.certificateNumber || "Number"}</p>
+        </div>
       </div>
     </div>
   );
@@ -299,13 +716,41 @@ const CertificateBuilder = () => {
         return renderTemplate7();
       case "template8":
         return renderTemplate8();
+      case "template9":
+        return renderTemplate9();
+      case "template10":
+        return renderTemplate10();
+      case "template11":
+        return renderTemplate11();
+      case "template12":
+        return renderTemplate12();
+      case "template13":
+        return renderTemplate13();
+      case "template14":
+        return renderTemplate14();
+      case "template15":
+        return renderTemplate15();
+      case "template16":
+        return renderTemplate16();
+      case "template17":
+        return renderTemplate17();
+      case "template18":
+        return renderTemplate18();
+      case "template19":
+        return renderTemplate19();
+      case "template20":
+        return renderTemplate20();
+      case "template21":
+        return renderTemplate21();
+      case "template22":
+        return renderTemplate22();
       default:
         return renderTemplate1();
     }
   };
 
   return (
-    <Container className="py-5 col-md-12">
+    <Container className="py-5">
       <Row>
         <Col md={12}>
           <Card className="mb-4 shadow-lg">
@@ -313,6 +758,15 @@ const CertificateBuilder = () => {
               <h2>Certificate Builder</h2>
             </Card.Header>
             <Card.Body>
+              {downloadError && (
+                <Alert
+                  variant="danger"
+                  onClose={() => setDownloadError(null)}
+                  dismissible
+                >
+                  {downloadError}
+                </Alert>
+              )}
               <Form>
                 <Form.Group className="mb-3" controlId="recipientName">
                   <Form.Label>Recipient Name *</Form.Label>
@@ -415,6 +869,48 @@ const CertificateBuilder = () => {
                     <option value="template6">Template 6 (Academic)</option>
                     <option value="template7">Template 7 (Creative)</option>
                     <option value="template8">Template 8 (Corporate)</option>
+                    <option value="template9">
+                      Template 9 (Vibrant Celebration)
+                    </option>
+                    <option value="template10">
+                      Template 10 (Futuristic Digital)
+                    </option>
+                    <option value="template11">
+                      Template 11 (Nature Inspired)
+                    </option>
+                    <option value="template12">
+                      Template 12 (Artistic Splash)
+                    </option>
+                    <option value="template13">
+                      Template 13 (Golden Prestige)
+                    </option>
+                    <option value="template14">
+                      Template 14 (Regal Sophistication)
+                    </option>
+                    <option value="template15">
+                      Template 15 (Corporate Excellence)
+                    </option>
+                    <option value="template16">
+                      Template 16 (Modern Prestige)
+                    </option>
+                    <option value="template17">
+                      Template 17 (Timeless Elegance)
+                    </option>
+                    <option value="template18">
+                      Template 18 (Tech Innovation)
+                    </option>
+                    <option value="template19">
+                      Template 19 (Academic Honor)
+                    </option>
+                    <option value="template20">
+                      Template 20 (Celestial Achievement)
+                    </option>
+                    <option value="template21">
+                      Template 21 (Eco-Friendly Recognition)
+                    </option>
+                    <option value="template22">
+                      Template 22 (Vintage Diploma)
+                    </option>
                   </Form.Select>
                 </Form.Group>
 
@@ -467,12 +963,15 @@ const CertificateBuilder = () => {
                     <option value="Verdana">Verdana</option>
                     <option value="Tahoma">Tahoma</option>
                     <option value="Courier New">Courier New</option>
-                    <option value="Brush Script MT">Brush Script MT</option>
                   </Form.Select>
                 </Form.Group>
 
-                <Button variant="primary" onClick={handleDownload}>
-                  Download Certificate
+                <Button
+                  variant="primary"
+                  onClick={handleDownload}
+                  disabled={isDownloading}
+                >
+                  {isDownloading ? "Generating..." : "Download Certificate"}
                 </Button>
               </Form>
             </Card.Body>
@@ -489,6 +988,7 @@ const CertificateBuilder = () => {
               height: "210mm",
               transform: "scale(0.42)",
               transformOrigin: "top left",
+              overflow: "hidden",
             }}
             ref={certificateRef}
           >

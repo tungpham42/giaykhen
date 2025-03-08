@@ -4,16 +4,10 @@
   flex-direction: column;
   gap: 8px;
 }
-/* Wrapper to handle scaling */
-.certificate-wrapper {
-  width: 100%;
-  overflow: hidden;
-}
 
-/* Base certificate preview styling */
 .certificate-preview {
-  width: 297mm; /* A4 landscape width */
-  height: 210mm; /* A4 landscape height */
+  width: 297mm;
+  height: 210mm;
   border: 2px solid #000;
   margin: 0;
   box-sizing: border-box;
@@ -21,7 +15,6 @@
   position: relative;
 }
 
-/* Ensure body fills the entire certificate */
 .certificate-body {
   padding: 0 !important;
   text-align: center;
@@ -33,7 +26,6 @@
   align-items: center;
 }
 
-/* Base content styling */
 .certificate-content {
   width: 100%;
   height: 100%;
@@ -45,7 +37,6 @@
   position: relative;
 }
 
-/* Consistent base typography (overridable by dynamic styles) */
 .certificate-content h1 {
   font-size: 24pt;
   margin: 8mm 0;
@@ -53,14 +44,14 @@
 }
 
 .certificate-content h2 {
-  color: #e74c3c;
+  color: currentColor;
   font-size: 18pt;
   margin: 6mm 0;
   line-height: 1.3;
 }
 
 .certificate-content h3 {
-  color: #3498db;
+  color: currentColor;
   font-size: 14pt;
   margin: 6mm 0;
   line-height: 1.4;
@@ -75,20 +66,27 @@
 .certificate-logo {
   max-width: 30mm;
   max-height: 30mm;
-  margin: 5mm;
+  margin: 5mm auto;
   display: block;
   object-fit: contain;
 }
 
-/* Template 1 - Classic */
-.certificate-content.template1 {
+/* Template 1 - Classic with Flourishes */
+.template1 {
   border: 1mm solid #2c3e50;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.9),
-    rgba(240, 240, 240, 0.9)
-  );
+  background: linear-gradient(to bottom, #fffef7, #f5f3e5);
   box-shadow: inset 0 0 5mm rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.template1-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path fill="rgba(44,62,80,0.1)" d="M25 5C12.85 5 5 12.85 5 25s7.85 20 20 20 20-7.85 20-20S37.15 5 25 5zm0 36c-8.27 0-15-6.73-15-15s6.73-15 15-15 15 6.73 15 15-6.73 15-15 15z"/></svg>')
+    repeat;
 }
 
 .template1 h1 {
@@ -96,19 +94,43 @@
   text-transform: uppercase;
   border-bottom: 0.5mm solid currentColor;
   padding-bottom: 2mm;
+  background: linear-gradient(90deg, #2c3e50, #4a6978);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: currentColor;
 }
 
-.template1 p {
+.template1-subtitle {
   font-style: italic;
+  font-size: 14pt;
+  color: currentColor;
 }
 
-/* Template 2 - Modern */
+.template1-details {
+  margin-top: 10mm;
+  border-top: 0.3mm dashed #2c3e50;
+  padding-top: 5mm;
+}
+
+/* Template 2 - Modern with Geometric Accents */
 .template2 {
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
   border-radius: 5mm;
   box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.template2-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  z-index: 0;
 }
 
 .template2 h1 {
@@ -117,10 +139,13 @@
   padding-bottom: 3mm;
   text-transform: uppercase;
   letter-spacing: 1mm;
+  position: relative;
+  z-index: 1;
 }
 
 .template2 h2 {
   font-weight: 600;
+  text-shadow: 0 1mm 2mm rgba(0, 0, 0, 0.1);
 }
 
 .template2-details {
@@ -129,9 +154,12 @@
   display: flex;
   justify-content: space-between;
   width: 80%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   padding: 3mm;
   border-radius: 2mm;
+  box-shadow: 0 1mm 2mm rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 /* Template 3 - Minimalist */
@@ -169,7 +197,7 @@
   justify-content: space-around;
   margin-top: 10mm;
   font-size: 10pt;
-  color: #7f8c8d;
+  color: currentColor;
 }
 
 /* Template 4 - Elegant */
@@ -196,7 +224,7 @@
 
 .template4 p {
   font-style: italic;
-  color: #555;
+  color: currentColor;
 }
 
 .template4-footer {
@@ -219,7 +247,7 @@
   padding: 5mm;
   border-bottom: 0.5mm solid currentColor;
   background: #2c3e50;
-  color: #fff;
+  color: currentColor;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,7 +256,7 @@
 .template5-header h1 {
   font-size: 20pt;
   margin: 0;
-  color: #fff;
+  color: currentColor;
   text-transform: uppercase;
 }
 
@@ -255,7 +283,7 @@
 .template5-detail p:first-child {
   font-weight: bold;
   margin-bottom: 2mm;
-  color: #2c3e50;
+  color: currentColor;
 }
 
 /* Template 6 - Academic */
@@ -269,7 +297,7 @@
 .template6-header {
   padding: 5mm;
   background: #8b4513;
-  color: #fff;
+  color: currentColor;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +367,7 @@
   background: linear-gradient(90deg, #9b59b6, #3498db);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  color: currentColor;
 }
 
 .template7 h2 {
@@ -367,7 +395,7 @@
 .template8-header {
   padding: 5mm;
   background: #34495e;
-  color: #fff;
+  color: currentColor;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,10 +421,783 @@
   padding: 5mm;
   font-size: 10pt;
   background: #34495e;
-  color: #fff;
+  color: currentColor;
 }
 
-/* General card styling */
-.card {
-  border: none;
+/* Template 9 - Vibrant Celebration */
+.template9 {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  position: relative;
+  overflow: hidden;
+}
+
+.template9-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="rgba(255,255,255,0.1)" d="M20 5l5 10h10l-8 7 3 11-10-6-10 6 3-11-8-7h10z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template9-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.2);
+  border: 1mm solid gold;
+}
+
+.template9 h1 {
+  font-size: 26pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff6b6b, #45b7d1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: currentColor;
+  text-shadow: 0 1mm 2mm rgba(0, 0, 0, 0.1);
+}
+
+.template9 h2 {
+  color: currentColor;
+  font-style: italic;
+}
+
+.template9-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3mm;
+  border-radius: 2mm;
+}
+
+/* Template 10 - Futuristic Digital */
+.template10 {
+  background: linear-gradient(135deg, #1e1e2f, #2a2a4e);
+  position: relative;
+  overflow: hidden;
+}
+
+.template10-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><rect x="10" y="10" width="10" height="10" fill="rgba(255,255,255,0.05)" transform="rotate(45 15 15)"/></svg>')
+    repeat;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.template10-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15mm;
+  border-radius: 5mm;
+  border: 1mm solid #00d4ff;
+  box-shadow: 0 0 5mm rgba(0, 212, 255, 0.3);
+}
+
+.template10 h1 {
+  font-size: 24pt;
+  color: currentColor;
+  text-transform: uppercase;
+  letter-spacing: 1.5mm;
+  text-shadow: 0 0 3mm rgba(0, 212, 255, 0.5);
+}
+
+.template10 h2 {
+  color: currentColor;
+  font-weight: 700;
+}
+
+.template10 h3 {
+  color: currentColor;
+}
+
+.template10-details {
+  margin-top: 10mm;
+  font-size: 10pt;
+  color: currentColor;
+}
+
+.template10-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 2mm;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 2mm 0;
+  border-radius: 1mm;
+}
+
+.template10-detail-item span:first-child {
+  font-weight: bold;
+  color: currentColor;
+}
+
+/* New Template 11 - Nature Inspired */
+.template11 {
+  background: linear-gradient(to bottom, #d4e4bc, #a8d5ba);
+  position: relative;
+  overflow: hidden;
+}
+
+.template11-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path fill="rgba(255,255,255,0.2)" d="M25 5c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm0 32c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14zM15 23l5-5 5 5 5-5 5 5"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template11-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15mm;
+  border-radius: 10mm;
+  box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.15);
+  border: 1mm solid #6b8e23;
+}
+
+.template11 h1 {
+  font-size: 26pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: currentColor;
+  text-shadow: 0 1mm 2mm rgba(107, 142, 35, 0.2);
+}
+
+.template11 h2 {
+  color: currentColor;
+  font-style: italic;
+}
+
+.template11-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 3mm;
+  border-radius: 2mm;
+  border-top: 0.3mm dashed #6b8e23;
+}
+
+/* New Template 12 - Artistic Splash */
+.template12 {
+  background: radial-gradient(circle at center, #fff0f6, #e6e6fa);
+  position: relative;
+  overflow: hidden;
+}
+
+.template12-splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="rgba(255,105,180,0.1)"/><path fill="rgba(147,112,219,0.1)" d="M30 10c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template12-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  border-radius: 12mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.2);
+  border: 2mm solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(45deg, #ff69b4, #9370db) 1;
+}
+
+.template12 h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff69b4, #9370db);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: currentColor;
+  text-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.1);
+}
+
+.template12 h2 {
+  color: currentColor;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.template12-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3mm;
+  border-radius: 3mm;
+  border-top: 0.5mm dotted #ff69b4;
+}
+
+/* New Template 13 - Golden Prestige */
+.template13 {
+  background: linear-gradient(to bottom, #fffacd, #f0e68c);
+  position: relative;
+  overflow: hidden;
+}
+
+.template13-border {
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  right: 5mm;
+  bottom: 5mm;
+  border: 2mm double #b8860b;
+  border-radius: 5mm;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path fill="rgba(184,134,11,0.1)" d="M15 5l5 5-5 5-5-5 5-5z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template13-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20mm;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.2);
+}
+
+.template13 h1 {
+  font-size: 26pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: currentColor;
+  text-shadow: 0 1mm 2mm rgba(184, 134, 11, 0.3);
+}
+
+.template13 h2 {
+  color: currentColor;
+  font-style: italic;
+}
+
+.template13-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3mm;
+  border-radius: 2mm;
+  border-top: 0.5mm solid #b8860b;
+}
+/* Template 14 - Regal Sophistication */
+.template14 {
+  background: linear-gradient(to bottom, #f8f1e9, #e8dcca);
+  position: relative;
+  overflow: hidden;
+  border: 1mm solid #4a2c2a;
+}
+
+.template14-frame {
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  right: 5mm;
+  bottom: 5mm;
+  border: 0.5mm double #4a2c2a;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="rgba(74,44,42,0.1)" d="M10 2l2 6h6l-4 3 1 6-5-4-5 4 1-6-4-3h6z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template14-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  margin: 10mm;
+  border-radius: 5mm;
+  box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.15);
+  border: 0.3mm solid #4a2c2a;
+}
+
+.template14 h1 {
+  font-size: 26pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: currentColor;
+  text-shadow: 0 1mm 2mm rgba(74, 44, 42, 0.2);
+  border-bottom: 0.5mm solid #4a2c2a;
+  padding-bottom: 2mm;
+}
+
+.template14 h2 {
+  color: currentColor;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.template14-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3mm;
+  border-radius: 2mm;
+  border-top: 0.3mm dashed #4a2c2a;
+}
+
+/* Template 15 - Corporate Excellence */
+.template15 {
+  background: #ffffff;
+  border-top: 6mm solid #1a3c34;
+  border-bottom: 6mm solid #1a3c34;
+  justify-content: space-between;
+  box-shadow: inset 0 0 5mm rgba(0, 0, 0, 0.05);
+}
+
+.template15-header {
+  padding: 5mm;
+  background: #1a3c34;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template15-header h1 {
+  font-size: 24pt;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1mm;
+  color: #ffffff;
+}
+
+.template15-body {
+  flex: 1;
+  padding: 15mm;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #f4f6f5);
+}
+
+.template15-body p {
+  color: #1a3c34;
+  font-size: 12pt;
+}
+
+.template15-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 5mm;
+  font-size: 11pt;
+  background: #1a3c34;
+  color: #ffffff;
+}
+
+/* Template 16 - Modern Prestige */
+.template16 {
+  background: linear-gradient(120deg, #e8ecef, #ced4da);
+  position: relative;
+  overflow: hidden;
+}
+
+.template16-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect x="15" y="15" width="10" height="10" fill="rgba(108,117,125,0.1)" transform="rotate(45 20 20)"/></svg>')
+    repeat;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.template16-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 15mm;
+  margin: 10mm;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.1);
+  border-left: 4mm solid #6c757d;
+}
+
+.template16 h1 {
+  font-size: 25pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: currentColor;
+  border-bottom: 1mm solid #6c757d;
+  padding-bottom: 3mm;
+  letter-spacing: 0.5mm;
+}
+
+.template16 h2 {
+  color: currentColor;
+  font-weight: 600;
+}
+
+.template16-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4mm;
+  border-radius: 3mm;
+  border-top: 0.5mm solid #6c757d;
+}
+/* Template 17 - Timeless Elegance */
+.template17 {
+  background: linear-gradient(to bottom, #f9f6f2, #e5e2d9);
+  position: relative;
+  overflow: hidden;
+  border: 1mm solid #3c2f2f;
+}
+
+.template17-border {
+  position: absolute;
+  top: 8mm;
+  left: 8mm;
+  right: 8mm;
+  bottom: 8mm;
+  border: 0.5mm solid #3c2f2f;
+  border-radius: 3mm;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"><circle cx="12.5" cy="12.5" r="10" fill="rgba(60,47,47,0.05)"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template17-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 15mm;
+  margin: 12mm;
+  border-radius: 6mm;
+  box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.1);
+  border: 0.4mm solid #3c2f2f;
+}
+
+.template17 h1 {
+  font-size: 28pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: currentColor;
+  border-bottom: 0.6mm solid #3c2f2f;
+  padding-bottom: 2mm;
+  letter-spacing: 0.8mm;
+}
+
+.template17 h2 {
+  color: currentColor;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.template17-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4mm;
+  border-radius: 2mm;
+  border-top: 0.4mm dashed #3c2f2f;
+}
+
+/* Template 18 - Tech Innovation */
+.template18 {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.template18-header {
+  padding: 6mm;
+  background: #2c5364;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1mm solid #00b4db;
+}
+
+.template18-header h1 {
+  font-size: 26pt;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.2mm;
+  color: #ffffff;
+  text-shadow: 0 1mm 2mm rgba(0, 180, 219, 0.3);
+}
+
+.template18-body {
+  flex: 1;
+  padding: 15mm;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5mm;
+  margin: 10mm;
+  box-shadow: 0 0 5mm rgba(0, 180, 219, 0.2);
+}
+
+.template18-body p {
+  color: #ffffff;
+  font-size: 12pt;
+}
+
+.template18-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 6mm;
+  font-size: 11pt;
+  background: #2c5364;
+  color: #ffffff;
+  border-top: 1mm solid #00b4db;
+}
+
+/* Template 19 - Academic Honor */
+.template19 {
+  background: linear-gradient(to bottom, #f5f5f5, #dcdcdc);
+  position: relative;
+  overflow: hidden;
+}
+
+.template19-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35"><path fill="rgba(0,0,0,0.05)" d="M17.5 5l5 5-5 5-5-5 5-5z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template19-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  margin: 10mm;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.15);
+  border: 1mm solid #4a4e4d;
+}
+
+.template19 h1 {
+  font-size: 27pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: currentColor;
+  border-bottom: 0.8mm solid #4a4e4d;
+  padding-bottom: 3mm;
+}
+
+.template19 h2 {
+  color: currentColor;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.template19-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4mm;
+  border-radius: 3mm;
+  border-top: 0.5mm solid #4a4e4d;
+}
+/* Template 20 - Celestial Achievement */
+.template20 {
+  background: linear-gradient(to bottom, #0b0c2b, #1e2a47);
+  position: relative;
+  overflow: hidden;
+}
+
+.template20-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="rgba(255,255,255,0.1)" d="M10 2l2 6h6l-4 3 1 6-5-4-5 4 1-6-4-3h6z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template20-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 15mm;
+  margin: 10mm;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(255, 215, 0, 0.2);
+  border: 1mm solid #ffd700;
+}
+
+.template20 h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffd700;
+  text-shadow: 0 1mm 3mm rgba(255, 215, 0, 0.5);
+}
+
+.template20 h2 {
+  color: #ffffff;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.template20 h3 {
+  color: #ffd700;
+}
+
+.template20 p {
+  color: #ffffff;
+}
+
+.template20-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4mm;
+  border-radius: 3mm;
+  color: #ffffff;
+  border-top: 0.5mm dashed #ffd700;
+}
+
+/* Template 21 - Eco-Friendly Recognition */
+.template21 {
+  background: linear-gradient(to bottom, #e9f5db, #c9e4b7);
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.template21-header {
+  padding: 5mm;
+  background: #588157;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1mm solid #3a5a40;
+}
+
+.template21-header h1 {
+  font-size: 26pt;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1mm;
+  color: #ffffff;
+}
+
+.template21-body {
+  flex: 1;
+  padding: 15mm;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  margin: 10mm;
+  border-radius: 5mm;
+  box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.1);
+}
+
+.template21-body p {
+  color: #3a5a40;
+  font-size: 12pt;
+}
+
+.template21-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 5mm;
+  font-size: 11pt;
+  background: #588157;
+  color: #ffffff;
+  border-top: 1mm solid #3a5a40;
+}
+
+/* Template 22 - Vintage Diploma */
+.template22 {
+  background: linear-gradient(to bottom, #f4e9cd, #d9c8a2);
+  position: relative;
+  overflow: hidden;
+  border: 1mm solid #5c4033;
+}
+
+.template22-frame {
+  position: absolute;
+  top: 6mm;
+  left: 6mm;
+  right: 6mm;
+  bottom: 6mm;
+  border: 0.5mm double #5c4033;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path fill="rgba(92,64,51,0.1)" d="M15 5a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg>')
+    repeat;
+  z-index: 0;
+}
+
+.template22-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  margin: 12mm;
+  border-radius: 6mm;
+  box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.15);
+  border: 0.5mm solid #5c4033;
+}
+
+.template22 h1 {
+  font-size: 27pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: currentColor;
+  border-bottom: 0.7mm solid #5c4033;
+  padding-bottom: 3mm;
+}
+
+.template22 h2 {
+  color: currentColor;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.template22-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4mm;
+  border-radius: 3mm;
+  border-top: 0.5mm dashed #5c4033;
 }
