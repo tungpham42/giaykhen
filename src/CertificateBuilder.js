@@ -986,7 +986,7 @@ const CertificateBuilder = () => {
               ...certificateStyles,
               width: "297mm",
               height: "210mm",
-              transform: "scale(0.42)",
+              transform: "scale(1)",
               transformOrigin: "top left",
               overflow: "hidden",
             }}
