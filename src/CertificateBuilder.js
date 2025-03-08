@@ -102,9 +102,9 @@ const CertificateBuilder = () => {
   const isMobile = window.innerWidth <= 768;
   const previewStyles = {
     ...certificateStyles,
-    width: isMobile ? "297px" : "297mm",
-    height: isMobile ? "210px" : "210mm",
-    transform: isMobile ? "none" : "scale(1)",
+    width: isMobile ? "297mm" : "297mm",
+    height: isMobile ? "210mm" : "210mm",
+    transform: isMobile ? "scale(1)" : "scale(1)",
     transformOrigin: "top left",
     overflow: "hidden",
   };
