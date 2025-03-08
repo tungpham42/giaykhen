@@ -108,8 +108,6 @@ const CertificateBuilder = () => {
     }
   }, [validateForm]);
 
-  const isMobile = window.innerWidth <= 768; // Simple mobile detection
-
   const certificateStyles = {
     backgroundColor: styles.backgroundColor,
     color: styles.textColor,
@@ -118,9 +116,6 @@ const CertificateBuilder = () => {
 
   const previewStyles = {
     ...certificateStyles,
-    width: isMobile ? "100%" : "297mm",
-    height: isMobile ? "auto" : "210mm",
-    transform: isMobile ? "none" : "scale(1)",
     transformOrigin: "top left",
     overflow: "hidden",
   };
