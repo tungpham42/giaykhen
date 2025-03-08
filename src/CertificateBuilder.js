@@ -9,7 +9,6 @@ import {
   Alert,
 } from "react-bootstrap";
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { SketchPicker } from "react-color";
 import "./CertificateBuilder.css";
 
@@ -66,7 +65,7 @@ const CertificateBuilder = () => {
 
       const canvas = await html2canvas(element, {
         scale: window.devicePixelRatio || 2,
-        useCORS: true,
+        useCORS: false,
         allowTaint: true,
         logging: false,
         width: element.scrollWidth,
@@ -78,31 +77,17 @@ const CertificateBuilder = () => {
         foreignObjectRendering: false,
       });
 
+      // Convert canvas to PNG and trigger download
       const imgData = canvas.toDataURL("image/png", 1.0);
-      const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: "a4",
-        compress: true,
-      });
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgProps = { width: canvas.width, height: canvas.height };
-      const ratio = Math.min(
-        pdfWidth / imgProps.width,
-        pdfHeight / imgProps.height
-      );
-      const imgWidth = imgProps.width * ratio;
-      const imgHeight = imgProps.height * ratio;
-      const xOffset = (pdfWidth - imgWidth) / 2;
-      const yOffset = (pdfHeight - imgHeight) / 2;
-
-      pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
-      pdf.save("Certificate.pdf");
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = "Certificate.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error("Download error:", error);
-      setDownloadError(`Failed to generate PDF: ${error}`);
+      setDownloadError(`Failed to generate PNG: ${error.message}`);
     } finally {
       setIsDownloading(false);
     }
@@ -112,6 +97,16 @@ const CertificateBuilder = () => {
     backgroundColor: styles.backgroundColor,
     color: styles.textColor,
     fontFamily: styles.fontFamily,
+  };
+
+  const isMobile = window.innerWidth <= 768;
+  const previewStyles = {
+    ...certificateStyles,
+    width: isMobile ? "297px" : "297mm",
+    height: isMobile ? "210px" : "210mm",
+    transform: isMobile ? "none" : "scale(1)",
+    transformOrigin: "top left",
+    overflow: "hidden",
   };
 
   // Modified templates without logo
@@ -579,15 +574,6 @@ const CertificateBuilder = () => {
               <h2>Certificate Builder</h2>
             </Card.Header>
             <Card.Body>
-              {downloadError && (
-                <Alert
-                  variant="danger"
-                  onClose={() => setDownloadError(null)}
-                  dismissible
-                >
-                  {downloadError}
-                </Alert>
-              )}
               <Form>
                 <Form.Group className="mb-3" controlId="recipientName">
                   <Form.Label>Recipient Name *</Form.Label>
@@ -763,6 +749,14 @@ const CertificateBuilder = () => {
                     <option value="Verdana">Verdana</option>
                     <option value="Tahoma">Tahoma</option>
                     <option value="Courier New">Courier New</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Lexend Deca">Lexend Deca</option>
+                    <option value="Questrial">Questrial</option>
+                    <option value="Lobster">Lobster</option>
+                    <option value="Raleway">Raleway</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Dancing Script">Dancing Script</option>
                   </Form.Select>
                 </Form.Group>
 
@@ -773,6 +767,15 @@ const CertificateBuilder = () => {
                 >
                   {isDownloading ? "Generating..." : "Download Certificate"}
                 </Button>
+                {downloadError && (
+                  <Alert
+                    variant="danger"
+                    onClose={() => setDownloadError(null)}
+                    dismissible
+                  >
+                    {downloadError}
+                  </Alert>
+                )}
               </Form>
             </Card.Body>
           </Card>
@@ -782,14 +785,7 @@ const CertificateBuilder = () => {
         <Col md={12}>
           <Card
             className="certificate-preview shadow-lg"
-            style={{
-              ...certificateStyles,
-              width: "297mm",
-              height: "210mm",
-              transform: "scale(1)",
-              transformOrigin: "top left",
-              overflow: "hidden",
-            }}
+            style={previewStyles}
             ref={certificateRef}
           >
             <Card.Body className="certificate-body">
