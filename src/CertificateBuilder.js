@@ -67,6 +67,7 @@ const CertificateBuilder = () => {
       const canvas = await html2canvas(element, {
         scale: window.devicePixelRatio || 2,
         useCORS: true,
+        allowTaint: true, // Allow tainted canvas (less secure, use cautiously)
         logging: false,
         width: element.scrollWidth,
         height: element.scrollHeight,
@@ -74,6 +75,7 @@ const CertificateBuilder = () => {
         scrollY: 0,
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
+        foreignObjectRendering: true, // Handle custom fonts/SVGs
       });
 
       const imgData = canvas.toDataURL("image/png", 1.0);
@@ -106,10 +108,21 @@ const CertificateBuilder = () => {
     }
   }, [validateForm]);
 
+  const isMobile = window.innerWidth <= 768; // Simple mobile detection
+
   const certificateStyles = {
     backgroundColor: styles.backgroundColor,
     color: styles.textColor,
     fontFamily: styles.fontFamily,
+  };
+
+  const previewStyles = {
+    ...certificateStyles,
+    width: isMobile ? "100%" : "297mm",
+    height: isMobile ? "auto" : "210mm",
+    transform: isMobile ? "none" : "scale(1)",
+    transformOrigin: "top left",
+    overflow: "hidden",
   };
 
   // Modified templates without logo
@@ -780,14 +793,7 @@ const CertificateBuilder = () => {
         <Col md={12}>
           <Card
             className="certificate-preview shadow-lg"
-            style={{
-              ...certificateStyles,
-              width: "297mm",
-              height: "210mm",
-              transform: "scale(1)",
-              transformOrigin: "top left",
-              overflow: "hidden",
-            }}
+            style={previewStyles}
             ref={certificateRef}
           >
             <Card.Body className="certificate-body">
