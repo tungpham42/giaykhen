@@ -1187,3 +1187,72 @@
   border-radius: 3mm;
   border-top: 0.5mm dashed #5c4033;
 }
+/* Template 23 - Ocean Waves */
+.template23 {
+  background: linear-gradient(to bottom, #e6f3fa, #b3d9e6);
+  position: relative;
+  overflow: hidden;
+  border: 2mm solid transparent;
+  border-radius: 8mm;
+  box-shadow: 0 3mm 6mm rgba(0, 0, 0, 0.1);
+}
+
+.template23-waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/public/svg/23-back.svg") repeat-x bottom;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.template23-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15mm;
+  margin: 12mm;
+  border-radius: 6mm;
+  box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.1);
+  border: 2mm solid #007bff; /* Blue wave border */
+  border-image: url("/public/svg/23-border.svg") 10 stretch;
+  background-clip: padding-box;
+}
+
+.template23 h1 {
+  font-size: 26pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #007bff;
+  border-bottom: 0.5mm solid #007bff;
+  padding-bottom: 2mm;
+  letter-spacing: 0.8mm;
+  text-shadow: 0 1mm 2mm rgba(0, 123, 255, 0.2);
+}
+
+.template23 h2 {
+  color: #007bff;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.template23 h3 {
+  color: #007bff;
+}
+
+.template23 p {
+  color: #0056b3;
+}
+
+.template23-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4mm;
+  border-radius: 3mm;
+  border-top: 0.5mm dashed #007bff;
+}

@@ -526,6 +526,24 @@ const CertificateBuilder = () => {
     </div>
   );
 
+  const renderTemplate23 = () => (
+    <div className="certificate-content template23">
+      <div className="template23-waves"></div>
+      <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+      <div className="template23-content">
+        <p>Presented to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For outstanding achievement in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template23-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderTemplate = () => {
     switch (template) {
       case "template1":
@@ -572,6 +590,8 @@ const CertificateBuilder = () => {
         return renderTemplate21();
       case "template22":
         return renderTemplate22();
+      case "template23":
+        return renderTemplate23();
       default:
         return renderTemplate1();
     }
@@ -708,6 +728,9 @@ const CertificateBuilder = () => {
                     </option>
                     <option value="template22">
                       Template 22 (Vintage Diploma)
+                    </option>
+                    <option value="template23">
+                      Template 23 (Ocean Waves)
                     </option>
                   </Form.Select>
                 </Form.Group>
