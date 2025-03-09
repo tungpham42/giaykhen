@@ -75,7 +75,7 @@ const CertificateBuilder = () => {
       const canvas = await html2canvas(element, {
         scale: scaleFactor,
         useCORS: true, // Enforce CORS for external resources
-        allowTaint: false, // Disable tainting for security
+        allowTaint: true, // Disable tainting for security
         logging: false,
         width: width,
         height: height,

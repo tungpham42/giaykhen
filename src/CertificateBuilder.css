@@ -85,7 +85,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/1.svg") repeat;
+  background: url("/public/png/1.png") repeat;
 }
 
 .template1 h1 {
@@ -202,7 +202,7 @@
 /* Template 4 - Elegant */
 .template4 {
   justify-content: center;
-  background: url("/public/svg/4.svg") repeat;
+  background: url("/public/png/4.png") repeat;
 }
 
 .template4-border {
@@ -343,7 +343,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/7.svg") repeat;
+  background: url("/public/png/7.png") repeat;
   opacity: 0.3;
   z-index: 0;
 }
@@ -434,7 +434,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/9.svg") repeat;
+  background: url("/public/png/9.png") repeat;
   z-index: 0;
 }
 
@@ -487,7 +487,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/10.svg") repeat;
+  background: url("/public/png/10.png") repeat;
   opacity: 0.7;
   z-index: 0;
 }
@@ -552,7 +552,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/11.svg") repeat;
+  background: url("/public/png/11.png") repeat;
   z-index: 0;
 }
 
@@ -603,7 +603,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/12.svg") repeat;
+  background: url("/public/png/12.png") repeat;
   z-index: 0;
 }
 
@@ -662,7 +662,7 @@
   bottom: 5mm;
   border: 2mm double #b8860b;
   border-radius: 5mm;
-  background: url("/public/svg/13.svg") repeat;
+  background: url("/public/png/13.png") repeat;
   z-index: 0;
 }
 
@@ -713,7 +713,7 @@
   right: 5mm;
   bottom: 5mm;
   border: 0.5mm double #4a2c2a;
-  background: url("/public/svg/14.svg") repeat;
+  background: url("/public/png/14.png") repeat;
   z-index: 0;
 }
 
@@ -815,7 +815,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/16.svg") repeat;
+  background: url("/public/png/16.png") repeat;
   opacity: 0.5;
   z-index: 0;
 }
@@ -872,7 +872,7 @@
   bottom: 8mm;
   border: 0.5mm solid #3c2f2f;
   border-radius: 3mm;
-  background: url("/public/svg/17.svg") repeat;
+  background: url("/public/png/17.png") repeat;
   z-index: 0;
 }
 
@@ -979,7 +979,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/19.svg") repeat;
+  background: url("/public/png/19.png") repeat;
   z-index: 0;
 }
 
@@ -1032,7 +1032,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/20.svg") repeat;
+  background: url("/public/png/20.png") repeat;
   z-index: 0;
 }
 
@@ -1147,7 +1147,7 @@
   right: 6mm;
   bottom: 6mm;
   border: 0.5mm double #5c4033;
-  background: url("/public/svg/22.svg") repeat;
+  background: url("/public/png/22.png") repeat;
   z-index: 0;
 }
 
@@ -1203,7 +1203,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/public/svg/23-back.svg") repeat-x bottom;
+  background: url("/public/png/23-back.png") repeat-x bottom;
   z-index: 0;
   opacity: 0.5;
 }
@@ -1217,7 +1217,7 @@
   border-radius: 6mm;
   box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.1);
   border: 2mm solid #007bff; /* Blue wave border */
-  border-image: url("/public/svg/23-border.svg") 10 stretch;
+  border-image: url("/public/png/23-border.png") 10 stretch;
   background-clip: padding-box;
 }
 
