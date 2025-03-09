@@ -544,6 +544,60 @@ const CertificateBuilder = () => {
     </div>
   );
 
+  const renderTemplate24 = () => (
+    <div className="certificate-content template24">
+      <div className="template24-overlay"></div>
+      <div className="template24-content">
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+        <p>Awarded to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For exceptional brilliance in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template24-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTemplate25 = () => (
+    <div className="certificate-content template25">
+      <div className="template25-overlay"></div>
+      <div className="template25-content">
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+        <p>Presented to</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For blooming excellence in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template25-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTemplate26 = () => (
+    <div className="certificate-content template26">
+      <div className="template26-spiral"></div>
+      <div className="template26-content">
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+        <p>Honoring</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>For cosmic achievements in</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template26-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>Issuer: {certificateData.issuer || "Issuer"}</p>
+          <p>ID: {certificateData.certificateNumber || "Number"}</p>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderTemplate = () => {
     switch (template) {
       case "template1":
@@ -592,6 +646,12 @@ const CertificateBuilder = () => {
         return renderTemplate22();
       case "template23":
         return renderTemplate23();
+      case "template24":
+        return renderTemplate24();
+      case "template25":
+        return renderTemplate25();
+      case "template26":
+        return renderTemplate26();
       default:
         return renderTemplate1();
     }
@@ -731,6 +791,15 @@ const CertificateBuilder = () => {
                     </option>
                     <option value="template23">
                       Template 23 (Ocean Waves)
+                    </option>
+                    <option value="template24">
+                      Template 24 (Aurora Glow)
+                    </option>
+                    <option value="template25">
+                      Template 25 (Ink Blossom)
+                    </option>
+                    <option value="template26">
+                      Template 26 (Cosmic Spiral)
                     </option>
                   </Form.Select>
                 </Form.Group>

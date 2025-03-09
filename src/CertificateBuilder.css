@@ -1224,3 +1224,193 @@
   padding: 4mm;
   border-top: 0.5mm dashed #007bff;
 }
+/* Template 24 - Aurora Glow */
+.template24 {
+  background: linear-gradient(120deg, #2a0845, #6441a5, #89f7fe, #66a6ff);
+  position: relative;
+  overflow: hidden;
+  animation: auroraShift 10s infinite alternate;
+}
+
+@keyframes auroraShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.template24-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.template24-content {
+  position: relative;
+  z-index: 1;
+  padding: 15mm;
+  color: #ffffff;
+  text-align: center;
+}
+
+.template24 h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 5mm rgba(255, 255, 255, 0.7);
+  margin-bottom: 8mm;
+}
+
+.template24 h2 {
+  font-size: 20pt;
+  font-style: italic;
+  color: #e0f7ff;
+  text-shadow: 0 0 3mm rgba(137, 247, 254, 0.5);
+}
+
+.template24 h3 {
+  font-size: 16pt;
+  color: #ffffff;
+}
+
+.template24-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10mm;
+  font-size: 11pt;
+  color: #e0f7ff;
+  border-top: 0.3mm dotted #ffffff;
+  padding-top: 4mm;
+}
+/* Template 25 - Ink Blossom */
+.template25 {
+  background: radial-gradient(circle, #fff7f9, #ffd1dc, #ffccd5);
+  position: relative;
+  overflow: hidden;
+}
+
+.template25-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/public/png/25.png") no-repeat center; /* Assume a floral ink splash image */
+  background-size: cover;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.template25-content {
+  position: relative;
+  z-index: 1;
+  padding: 15mm;
+  text-align: center;
+  color: #4a2c3e;
+}
+
+.template25 h1 {
+  font-size: 26pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff6f91, #ff9eb5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1mm 2mm rgba(74, 44, 62, 0.2);
+}
+
+.template25 h2 {
+  font-size: 20pt;
+  font-style: italic;
+  color: #ff6f91;
+}
+
+.template25 h3 {
+  font-size: 16pt;
+  color: #4a2c3e;
+}
+
+.template25-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  color: #4a2c3e;
+  border-top: 0.4mm wavy #ff9eb5; /* Wavy line for a playful touch */
+  padding-top: 4mm;
+}
+/* Template 26 - Cosmic Spiral */
+.template26 {
+  background: radial-gradient(
+    circle at 30% 70%,
+    #1b0036,
+    #3c096c,
+    #5c2e91,
+    #000
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.template26-spiral {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/public/png/26.png") no-repeat center; /* Assume a spiral galaxy image */
+  background-size: cover;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.template26-content {
+  position: relative;
+  z-index: 1;
+  padding: 15mm;
+  text-align: center;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%; /* Circular content area */
+  width: 70%;
+  margin: 0 auto;
+  top: 15%;
+}
+
+.template26 h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #d4a5ff;
+  text-shadow: 0 0 4mm rgba(212, 165, 255, 0.6);
+}
+
+.template26 h2 {
+  font-size: 20pt;
+  font-style: italic;
+  color: #ffffff;
+}
+
+.template26 h3 {
+  font-size: 16pt;
+  color: #d4a5ff;
+}
+
+.template26-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8mm;
+  font-size: 11pt;
+  color: #ffffff;
+  border-top: 0.3mm dashed #d4a5ff;
+  padding-top: 4mm;
+}
