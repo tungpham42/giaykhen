@@ -1414,3 +1414,67 @@
   border-top: 0.3mm dashed #d4a5ff;
   padding-top: 4mm;
 }
+
+/* Template 27 - Scalloped Border (Redesigned to Match Uploaded File) */
+.template27 {
+  background: #ffffff; /* White background for the certificate */
+  position: relative;
+  overflow: hidden;
+  border: 20mm solid #2c3e50; /* Outer transparent border to create space for the scalloped pattern */
+  box-sizing: border-box;
+  /* Use a radial-gradient to approximate the scalloped pattern */
+  box-shadow: 0 2mm 4mm rgba(0, 0, 0, 0.2); /* Slight shadow to match the uploaded certificate's depth */
+}
+
+.template27-content {
+  position: relative;
+  z-index: 1;
+  padding: 15mm;
+  text-align: center;
+  border: 0.5mm solid #d4af37; /* Gold inner frame to match the uploaded certificate */
+  margin: 10mm; /* Space between the scalloped border and content */
+  background: #ffffff; /* Ensure content area is white */
+  height: calc(100% - 20mm); /* Adjust height to account for margin */
+  box-sizing: border-box;
+}
+
+.template27 h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #2c3e50; /* Blue title to match the border */
+  margin-bottom: 8mm;
+}
+
+.template27 h2 {
+  font-size: 24pt;
+  font-family: "Dancing Script", cursive; /* Cursive font for recipient name */
+  color: #a52a2a; /* Reddish-brown color */
+  margin: 6mm 0;
+}
+
+.template27 h3 {
+  font-size: 16pt;
+  color: #000000; /* Black for additional text */
+  margin: 6mm 0;
+}
+
+.template27 p {
+  font-size: 12pt;
+  color: #000000;
+  margin: 4mm 0;
+}
+
+.template27-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10mm;
+  font-size: 11pt;
+  color: #000000;
+  border-top: 0.3mm solid #2c3e50; /* Blue line above details to match border */
+  padding-top: 4mm;
+}
+
+.template27-details span.signature {
+  color: #a52a2a; /* Reddish-brown for the secretary's name */
+}

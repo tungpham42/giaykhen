@@ -598,6 +598,27 @@ const CertificateBuilder = () => {
     </div>
   );
 
+  const renderTemplate27 = () => (
+    <div className="certificate-content template27">
+      <div className="template27-content">
+        <h1>{certificateData.certificateTitle || "Certificate Title"}</h1>
+        <p>This Certifies that</p>
+        <h2>{certificateData.recipientName || "Recipient Name"}</h2>
+        <p>Has completed the competition for</p>
+        <h3>{certificateData.certificateTitle || "Certificate Title"}</h3>
+        <div className="template27-details">
+          <p>Date: {certificateData.date || "Date"}</p>
+          <p>
+            Issuer:{" "}
+            <span className="signature">
+              {certificateData.issuer || "Issuer"}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderTemplate = () => {
     switch (template) {
       case "template1":
@@ -652,6 +673,8 @@ const CertificateBuilder = () => {
         return renderTemplate25();
       case "template26":
         return renderTemplate26();
+      case "template27":
+        return renderTemplate27();
       default:
         return renderTemplate1();
     }
@@ -800,6 +823,9 @@ const CertificateBuilder = () => {
                     </option>
                     <option value="template26">
                       Template 26 (Cosmic Spiral)
+                    </option>
+                    <option value="template27">
+                      Template 27 (Scalloped Border)
                     </option>
                   </Form.Select>
                 </Form.Group>
